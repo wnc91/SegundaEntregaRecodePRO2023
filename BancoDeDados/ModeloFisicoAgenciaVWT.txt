@@ -1,0 +1,47 @@
+CREATE DATABASE AgenciaVWT;
+USE AgenciaVWT;
+
+CREATE TABLE Cliente (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    CPF VARCHAR(11),
+    Email VARCHAR(50),
+    Nome VARCHAR(100),
+    Endereco VARCHAR(200),
+    Telefone VARCHAR(14),
+    UNIQUE (Email, ID)
+);
+
+CREATE TABLE Pedido (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Cliente_ID INT,
+    Destino VARCHAR(50),
+    Valor FLOAT,
+    DataDePartida DATE,
+    DataDeRetorno DATE,
+    FOREIGN KEY (Cliente_ID) REFERENCES Cliente(ID)
+);
+
+CREATE TABLE Destino (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(50),
+    Destino VARCHAR(400),
+    Pais VARCHAR(50),
+    Estado VARCHAR(50),
+    Cidade VARCHAR(50)
+);
+
+CREATE TABLE Realiza (
+    fk_Cliente_ID INT,
+    fk_Pedido_ID INT,
+    PRIMARY KEY (fk_Cliente_ID, fk_Pedido_ID),
+    FOREIGN KEY (fk_Cliente_ID) REFERENCES Cliente(ID),
+    FOREIGN KEY (fk_Pedido_ID) REFERENCES Pedido(ID)
+);
+
+CREATE TABLE Inclui (
+    fk_Pedido_ID INT,
+    fk_Destino_ID INT,
+    PRIMARY KEY (fk_Pedido_ID, fk_Destino_ID),
+    FOREIGN KEY (fk_Pedido_ID) REFERENCES Pedido(ID),
+    FOREIGN KEY (fk_Destino_ID) REFERENCES Destino(ID)
+);
